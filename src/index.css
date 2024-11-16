@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gradient-orange: linear-gradient(135deg, #ff9f43 0%, #ff6b6b 100%);
+  --gradient-blue: linear-gradient(135deg, #00cec9 0%, #0984e3 100%);
+  --gradient-green: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+  --dark-bg: #1a1e2e;
+  --card-bg: #242837;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: #ffffff;
+}
+
+.gradient-orange {
+  background: var(--gradient-orange);
+}
+
+.gradient-blue {
+  background: var(--gradient-blue);
+}
+
+.gradient-green {
+  background: var(--gradient-green);
+}
+
+.card-dark {
+  background-color: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
