@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Search, Plus, Edit2, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 type Category = {
   id: number;
@@ -19,7 +18,6 @@ const categories: Category[] = [
 ];
 
 export const Categories = () => {
-  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -101,8 +99,7 @@ export const Categories = () => {
           {displayedCategories.map((category) => (
             <div
               key={category.id}
-              className="grid grid-cols-12 gap-4 p-4 border-b border-gray-800 hover:bg-[#2a2f3f] transition-colors items-center cursor-pointer"
-              onClick={() => navigate(`/tasks/${category.id}`)}
+              className="grid grid-cols-12 gap-4 p-4 border-b border-gray-800 hover:bg-[#2a2f3f] transition-colors items-center"
             >
               <div className="col-span-4 text-white font-medium">{category.name}</div>
               <div className="col-span-3 flex items-center space-x-2">
@@ -115,19 +112,11 @@ export const Categories = () => {
               <div className="col-span-3 text-gray-400">{category.tasks} tasks</div>
               <div className="col-span-2 flex space-x-2">
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Handle edit
-                  }}
                   className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Handle delete
-                  }}
                   className="p-2 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-900/20 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
