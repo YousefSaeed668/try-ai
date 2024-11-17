@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Plus, Edit2, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CategoryDialog } from './CategoryDialog';
 
 type Category = {
   id: number;
@@ -20,6 +21,8 @@ const categories: Category[] = [
 export const Categories = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const itemsPerPage = 5;
 
   const filteredCategories = categories.filter(category =>
@@ -29,6 +32,22 @@ export const Categories = () => {
   const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedCategories = filteredCategories.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleAddCategory = (categoryData: { name: string; color: string }) => {
+    // Handle adding new category
+    console.log('Adding category:', categoryData);
+  };
+
+  const handleEditCategory = (categoryData: { name: string; color: string }) => {
+    // Handle editing category
+    console.log('Editing category:', categoryData);
+    setEditingCategory(null);
+  };
+
+  const handleEdit = (category: Category) => {
+    setEditingCategory(category);
+    setIsDialogOpen(true);
+  };
 
   const stats = [
     {
@@ -55,7 +74,13 @@ export const Categories = () => {
       <main className="p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-white">Categories</h1>
-          <button className="px-4 py-2 gradient-blue text-white rounded-lg hover:opacity-90 transition-opacity flex items-center">
+          <button
+            onClick={() => {
+              setEditingCategory(null);
+              setIsDialogOpen(true);
+            }}
+            className="px-4 py-2 gradient-blue text-white rounded-lg hover:opacity-90 transition-opacity flex items-center"
+          >
             <Plus className="w-5 h-5 mr-2" />
             Add Category
           </button>
@@ -112,6 +137,7 @@ export const Categories = () => {
               <div className="col-span-3 text-gray-400">{category.tasks} tasks</div>
               <div className="col-span-2 flex space-x-2">
                 <button
+                  onClick={() => handleEdit(category)}
                   className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   <Edit2 className="w-4 h-4" />
@@ -161,6 +187,18 @@ export const Categories = () => {
           )}
         </div>
       </main>
+
+      {/* Category Dialog */}
+      <CategoryDialog
+        isOpen={isDialogOpen}
+        onClose={() => {
+          setIsDialogOpen(false);
+          setEditingCategory(null);
+        }}
+        onSave={editingCategory ? handleEditCategory : handleAddCategory}
+        initialData={editingCategory || undefined}
+        title={editingCategory ? 'Edit Category' : 'Add Category'}
+      />
     </div>
   );
 };

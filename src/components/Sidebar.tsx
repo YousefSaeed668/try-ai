@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, CheckSquare, FolderKanban, User, Plus } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, FolderKanban, User, Users, Plus } from 'lucide-react';
 
 type Category = {
   name: string;
@@ -21,9 +21,9 @@ export const Sidebar = () => {
       <div className="p-4">
         <div className="space-y-2">
           <Link
-            to="/"
+            to="/dashboard"
             className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg ${
-              location.pathname === '/'
+              location.pathname === '/dashboard'
                 ? 'gradient-blue text-white'
                 : 'text-gray-300 hover:bg-gray-800'
             }`}
@@ -43,6 +43,17 @@ export const Sidebar = () => {
             My Tasks
           </Link>
           <Link
+            to="/teams"
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg ${
+              location.pathname === '/teams'
+                ? 'gradient-blue text-white'
+                : 'text-gray-300 hover:bg-gray-800'
+            }`}
+          >
+            <Users className="w-5 h-5 mr-3" />
+            Teams
+          </Link>
+          <Link
             to="/profile"
             className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg ${
               location.pathname === '/profile'
@@ -55,7 +66,11 @@ export const Sidebar = () => {
           </Link>
           <Link
             to="/categories"
-            className="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-800"
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg ${
+              location.pathname === '/categories'
+                ? 'gradient-blue text-white'
+                : 'text-gray-300 hover:bg-gray-800'
+            }`}
           >
             <FolderKanban className="w-5 h-5 mr-3" />
             Categories

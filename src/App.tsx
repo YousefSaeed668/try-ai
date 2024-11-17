@@ -1,30 +1,40 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { MyTasks } from './components/MyTasks';
 import { Profile } from './components/Profile';
 import { Categories } from './components/Categories';
+import { Teams } from './components/Teams';
 import { AddTask } from './components/AddTask';
 import { TaskDetails } from './components/TaskDetails';
 import { LandingPage } from './components/LandingPage';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 
-export const App = () => {
-  // Mock authentication state
-  const isAuthenticated = false;
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const publicPaths = ['/', '/login', '/register'];
+  const showNavigation = !publicPaths.includes(location.pathname);
 
   return (
+    <div className="min-h-screen bg-[#1a1e2e]">
+      {showNavigation && (
+        <>
+          <Sidebar />
+          <Header />
+        </>
+      )}
+      {children}
+    </div>
+  );
+};
+
+export const App = () => {
+  return (
     <Router>
-      <div className="min-h-screen bg-[#1a1e2e]">
-        {isAuthenticated && (
-          <>
-            <Sidebar />
-            <Header />
-          </>
-        )}
+      <Layout>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -36,10 +46,11 @@ export const App = () => {
           <Route path="/tasks" element={<MyTasks />} />
           <Route path="/tasks/add" element={<AddTask />} />
           <Route path="/tasks/:id" element={<TaskDetails />} />
+          <Route path="/teams" element={<Teams />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/categories" element={<Categories />} />
         </Routes>
-      </div>
+      </Layout>
     </Router>
   );
 };
